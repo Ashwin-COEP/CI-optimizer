@@ -1,0 +1,28 @@
+apiVersion: prow.k8s.io/v1
+kind: ProwJob
+metadata:
+  name: unit-tests-job
+  labels:
+    preset-job: 'true'
+spec:
+  agent: kubernetes
+  cluster: default
+  namespace: test-pods
+  job: periodic
+  cron: Unknown frequency
+  pod_spec:
+    containers:
+    - name: unit-tests.sh
+      image: busybox
+      command:
+      - /bin/sh
+      args:
+      - -c
+      - ./unit-tests.sh
+      resources:
+        limits:
+          cpu: 4000ms
+          memory: 512Mi
+        requests:
+          cpu: 4000ms
+          memory: 256Mi
