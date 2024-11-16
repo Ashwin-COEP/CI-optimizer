@@ -2,8 +2,10 @@
 
 from prompt import extract_details, create_prow_job
 
-# Example prompt to test the function
-prompt_text = "I want to run unit-tests.sh twice a day using 4000ms CPU"
+prompt_text = input("Enter a prompt containing name-of-script, frequency, e.g. every day and the CPU time in ms. Leave blank to see an example: ")
+if prompt_text == "":
+    # Example prompt to test the function
+    prompt_text = "I want to run unit-tests.sh every day using 4000ms CPU"
 script_name, cpu_time, frequency = extract_details(prompt_text)
 
 print(f"Script Name: {script_name}")
