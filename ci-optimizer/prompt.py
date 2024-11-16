@@ -42,18 +42,20 @@ def create_prow_job(script_name, cpu_time, cron_schedule):
     return yaml.dump(prow_job, sort_keys=False)
 
 # Example Usage
-script_name = "unit-tests.sh"
-cpu_time = "4000ms"
-cron_schedule = "0 * * * *"  # Replace with the appropriate crontab schedule
-prow_job_yaml = create_prow_job(script_name, cpu_time, cron_schedule)
-print(prow_job_yaml)
+# script_name = "unit-tests.sh"
+# cpu_time = "4000ms"
+# cron_schedule = "0 * * * *"  # Replace with the appropriate crontab schedule
+# prow_job_yaml = create_prow_job(script_name, cpu_time, cron_schedule)
+# print(prow_job_yaml)
 
 def convert_to_crontab(frequency_text):
     # Define mappings from natural language to crontab format
     frequency_mapping = {
         "once an hour": "0 * * * *",
+        "every hour": "0 * * * *",
         "every 2 hours": "0 */2 * * *",
         "every day": "0 0 * * *",
+        "once a day": "0 0 * * *",
         "once a week": "0 0 * * 0",
     }
 
@@ -74,7 +76,7 @@ def extract_details(prompt):
     cpu_pattern = r"(?:using\s+)?(\d+(?:\.\d+)?\s*(GHz|MHz|ms|cores?))(?:\s*CPU)?"
     
     # Regular expression to capture frequency in natural language
-    frequency_pattern = r"(every\s+\d+\s+(?:minute|hour|day|week)s?|once\s+an\s+hour|twice\s+a\s+day)"
+    frequency_pattern = r"(every\s+\d+\s+(?:minute|hour|day|week)s?|once\s+an\s+hour|twice\s+a\s+day|every\s+hour|every\s+day)"
     
     # Search for the script name
     script_match = re.search(script_pattern, prompt, re.IGNORECASE)
